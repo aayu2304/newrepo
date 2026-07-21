@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For My Strong Princess 👑</title>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #4a2c2a 0%, #2b1810 50%, #6f3826 100%);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow: hidden;
+      color: #fff;
+    }
+
+    .container {
+      text-align: center;
+      padding: 2rem;
+      z-index: 10;
+    }
+
+    .main-btn {
+      background: linear-gradient(45deg, #e63946, #ffb703);
+      border: none;
+      color: white;
+      padding: 1.2rem 2.5rem;
+      font-size: 1.3rem;
+      font-weight: bold;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    .main-btn:hover {
+      transform: scale(1.08);
+      box-shadow: 0 15px 30px rgba(230, 57, 70, 0.5);
+    }
+
+    .card {
+      display: none;
+      background: rgba(255, 240, 245, 0.95);
+      color: #3d2314;
+      padding: 2.5rem;
+      border-radius: 25px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+      border: 3px solid #ffb6c1;
+      max-width: 400px;
+      margin: 0 auto;
+      animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+
+    .card h1 {
+      font-size: 2.2rem;
+      color: #d62828;
+      margin-bottom: 0.8rem;
+    }
+
+    .card p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      color: #4a2c2a;
+    }
+
+    .chocos {
+      font-size: 2.5rem;
+      margin-top: 1rem;
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <button class="main-btn" id="surpriseBtn" onclick="revealSurprise()">
+      Click for a Sweet Surprise 🍫✨
+    </button>
+
+    <div class="card" id="messageCard">
+      <h1>Hey Princess! 👑✨</h1>
+      <p>Just a quick reminder that you are the <b>strongest, bravest, and most amazing princess</b> ever! 💖</p>
+      <p style="margin-top: 10px;">Sending you endless love and all the chocolate in the world! 🧸🍫</p>
+      <div class="chocos">🍫 🍩 💖 🧸 🧁</div>
+    </div>
+  </div>
+
+  <script>
+    function revealSurprise() {
+      // Hide button & show card
+      document.getElementById('surpriseBtn').style.display = 'none';
+      document.getElementById('messageCard').style.display = 'block';
+
+      // Emoji explosion settings
+      const emojis = ['🍫', '🍩', '💖', '👑', '✨', '🧸'];
+      
+      var scalar = 2;
+      var chocolateBurst = emojis.map(function(emoji) {
+        return confetti.shapeFromText({ text: emoji, scalar: scalar });
+      });
+
+      // Fire floating emojis across the screen
+      confetti({
+        shapes: chocolateBurst,
+        scalar: scalar,
+        particleCount: 60,
+        spread: 100,
+        origin: { y: 0.6 }
+      });
+
+      // Continuous celebratory rain
+      var duration = 3 * 1000;
+      var end = Date.now() + duration;
+
+      (function frame() {
+        confetti({
+          particleCount: 3,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 },
+          shapes: chocolateBurst,
+          scalar: scalar
+        });
+        confetti({
+          particleCount: 3,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 },
+          shapes: chocolateBurst,
+          scalar: scalar
+        });
+
+        if (Date.now() < end) {
+          requestAnimationFrame(frame);
+        }
+      })();
+    }
+  </script>
+
+</body>
+</html>
